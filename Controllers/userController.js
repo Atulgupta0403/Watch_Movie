@@ -3,7 +3,7 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
-    const { username, email, password, firstName, lastName } = req.body
+    const { username, email, password, firstName, lastName , accountType} = req.body
     const earlyUser = await userModels.findOne({ $or: [{ username, email }]})
 
     if (!username || !email || !password) {
@@ -23,8 +23,7 @@ const signup = async (req, res) => {
                     username,
                     email,
                     password: hash,
-                    firstName,
-                    lastName
+                    accountType
                 })
                 return res.json(user);
             });

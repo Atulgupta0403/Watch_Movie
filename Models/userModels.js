@@ -6,11 +6,10 @@ const userSchema = new mongoose.Schema({
     username: {
         type: String,
     },
-    firstName: {
-        type: String,
-    },
-    lastName: {
-        type: String
+    accountType : {
+        type : String,
+        default : "user",
+        enum : ["user" , "admin"],
     },
     email: {
         type: String,
@@ -23,9 +22,12 @@ const userSchema = new mongoose.Schema({
         type : String,
     },
     resetTokenExpires : {
-        type : Date
-        
-    }
+        type : Date  
+    },
+    watchedMovie : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Movie"
+    }]
 })
 
 
