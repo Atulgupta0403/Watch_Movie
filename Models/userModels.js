@@ -5,6 +5,8 @@ mongoose.connect(process.env.MONGODB_URL)
 const userSchema = new mongoose.Schema({
     username: {
         type: String,
+        unique : true,
+        required : true
     },
     accountType : {
         type : String,
@@ -13,21 +15,27 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: true
+        required: true,
+        unique : true,
+        // match : ["/@\^" , "Provide valid email"]
     },
     password: {
         type: String,
+        required : true
     },
+    genre : [{
+        type : String
+    }],
+    watchedMovie : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Movie"
+    }],
     resetToken : {
         type : String,
     },
     resetTokenExpires : {
         type : Date  
     },
-    watchedMovie : [{
-        type : mongoose.Schema.Types.ObjectId,
-        ref : "Movie"
-    }]
 })
 
 

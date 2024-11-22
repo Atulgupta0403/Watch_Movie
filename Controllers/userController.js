@@ -3,8 +3,9 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
-    const { username, email, password, firstName, lastName , accountType} = req.body
-    const earlyUser = await userModels.findOne({ $or: [{ username, email }]})
+    const { username, email, password , accountType} = req.body
+    const earlyUser = await userModels.findOne({$or : [{username} , {email}]})
+    console.log("earlyUser + " + earlyUser)
 
     if (!username || !email || !password) {
         return res.json("All fields are required")
@@ -32,13 +33,13 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { username, password } = req.body;
+    const { email , password } = req.body;
 
-    const user = await userModels.findOne({ username });
+    const user = await userModels.findOne({ email });
     if (user) {
         bcrypt.compare(password, user.password, (err, result) => {
             if (result) {
-                const token = jwt.sign({ username }, process.env.SECRET);
+                const token = jwt.sign({ email }, process.env.SECRET);
                 console.log(token)
                 res.json(token)
             }
@@ -48,7 +49,7 @@ const login = async (req, res) => {
         })
     }
     else {
-        return res.json(`There is no user with username = ${username}`);
+        return res.json(`There is no user with email = ${email}`);
     }
 }
 

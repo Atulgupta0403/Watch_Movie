@@ -24,26 +24,23 @@ app.use(passport.session());
 
 
 app.get("/", (req, res) => {
-  // if()
     res.send("slash page")
-})
-
-const isLoggedIn = require("./Middlewares/isLoggedIn");
-
-app.get("/profile" , isLoggedIn , (req,res) => {
-  res.send("profile")
 })
 
 
 const signup = require("./Routes/signup")
 const login = require("./Routes/login")
-const forget = require("./Routes/forgetPass");
+const forget = require("./Routes/forgetPass")
 const addMovie = require("./Routes/addMovie")
+const uploadVideo = require("./Routes/uploadVideo")
+const genre = require("./Routes/genre")
 
 app.use("/signup", signup)
 app.use("/login", login)
 app.use("/", forget)
 app.use("/movie" , addMovie)
+app.use("/" , uploadVideo)
+app.use("/genre" , genre)
 
 
 
