@@ -3,6 +3,8 @@ const multer = require("multer")
 const router = express.Router();
 const path = require("path")
 const movieModel = require("../Models/movieModel")
+const isLoggedIn = require("../Middlewares/isLoggedIn")
+const userModels = require("../Models/userModels")
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -25,8 +27,8 @@ const storage = multer.diskStorage({
 
 const fileFilter = (req, file, cb) => {
     const allowedTypes = [
-        'video/mp4', 'video/mkv', 'video/avi', // Video types
-        'image/jpeg', 'image/png', 'image/gif', 'image/webp' // Image types
+        'video/mp4', 'video/mkv', 'video/avi',
+        'image/jpeg', 'image/png', 'image/gif', 'image/webp'
     ];
     if (allowedTypes.includes(file.mimetype)) {
         cb(null, true);
@@ -44,35 +46,44 @@ const upload = multer({
     { name: 'thumbnail', maxCount: 1 } // Accept 1 image file
 ]);
 
-router.post('/upload', upload , async (req, res) => {
+router.post('/upload', isLoggedIn, upload, async (req, res) => {
     // link = req.files.video[0].path
     // type, duration = req.body
     // thumbnail = req.files.thumbnail[0].path
-    
-    const {type , duration , movieName} = req.body;
-    try {
-        if(!type || !duration || !movieName){
-            res.json({"message" : "All fields are required"})
+    if (req.user) {
+        const user = await userModels.findOne({ email: req.user.email });
+        if (user.accountType === "admin") {
+
+            const { type, duration, movieName } = req.body;
+            try {
+                // console.log(type + duration + movieName)
+                // console.log(req.files)
+                if (!type || !duration || !movieName) {
+                    res.json({ "message": "All fields are required" })
+                }
+                else {
+                    const movie = await movieModel.create({
+                        movieName,
+                        type,
+                        duration,
+                        link: req.files.video[0].path,
+                        thumbnail: req.files.thumbnail[0].path,
+                    })
+                    res.status(200).send({
+                        message: 'Video uploaded successfully!',
+                        file: req.files
+                    });
+                }
+            } catch (error) {
+                console.log("error " + error)
+                res.status(400).send({
+                    error: error.message
+                });
+            }
         }
         else{
-            const movie = await movieModel.create({
-                movieName,
-                type,
-                duration,
-                link : req.files.video[0].path,
-                thumbnail : req.files.thumbnail[0].path,
-            })
-            console.log(req.files.video[0])
-            res.status(200).send({
-                message: 'Video uploaded successfully!',
-                file: req.files
-            });
+            res.json({"message" : "You are not admin you cann't do this "})
         }
-    } catch (error) {
-        console.log("error " + error)
-        res.status(400).send({
-            error: error.message
-        });
     }
 });
 

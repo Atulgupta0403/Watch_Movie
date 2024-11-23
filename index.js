@@ -3,6 +3,7 @@ const express = require("express");
 const session = require('express-session');
 const app = express()
 const passport = require("passport")
+const status = require("express-status-monitor")
 
 
 
@@ -21,6 +22,7 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(status())
 
 
 app.get("/", (req, res) => {
@@ -34,6 +36,7 @@ const forget = require("./Routes/forgetPass")
 const addMovie = require("./Routes/addMovie")
 const uploadVideo = require("./Routes/uploadVideo")
 const genre = require("./Routes/genre")
+const video = require("./Routes/videos")
 
 app.use("/signup", signup)
 app.use("/login", login)
@@ -41,6 +44,7 @@ app.use("/", forget)
 app.use("/movie" , addMovie)
 app.use("/" , uploadVideo)
 app.use("/genre" , genre)
+app.use("/",video)
 
 
 
