@@ -16,7 +16,7 @@ const transporter = nodemailer.createTransport({
 })
 
 const forgetPasswordHandler = async (req,res) => {
-    const {email } = req.body;
+    const { email } = req.body;
     const user = await userModels.findOne({email})
     if(!user){
         res.json("User not found with this email")
@@ -53,8 +53,8 @@ const forgetPasswordHandler = async (req,res) => {
 
 const resetPasswordHandler = async (req,res) => {
 
-    const {resetToken } = req.params;
-    const {new_password } = req.body;
+    const { resetToken } = req.params;
+    const { new_password } = req.body;
 
     const user = await userModels.findOne({
         resetToken : resetToken ,
