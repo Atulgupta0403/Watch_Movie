@@ -54,11 +54,11 @@ const login = async (req, res) => {
 }
 
 
-const logout = async (req, res) => {
+const Delete = async (req, res) => {
     if (req.user) {
         const user = await userModels.findOneAndDelete({ email: req.user.email })
         res.json("Account deleted")
     }
 }
 
-module.exports = { signup, login, logout }
+module.exports = { signup, login, Delete }

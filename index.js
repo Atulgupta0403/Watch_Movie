@@ -36,7 +36,7 @@ const forget = require("./Routes/forgetPass")
 const uploadVideo = require("./Routes/uploadVideo")
 const genre = require("./Routes/genre")
 const video = require("./Routes/videos")
-const logout = require("./Routes/logout")
+const Delete = require("./Routes/delete")
 
 app.use("/signup", signup)
 app.use("/login", login)
@@ -44,7 +44,7 @@ app.use("/", forget)
 app.use("/", uploadVideo)
 app.use("/genre", genre)
 app.use("/", video)
-app.use("/logout", logout)
+app.use("/delete", Delete)
 
 
 

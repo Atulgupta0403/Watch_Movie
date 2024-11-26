@@ -34,7 +34,7 @@ const storage = multerS3({
 
 const tempStorage = multer.diskStorage({
     destination: (req, file, cb) => {
-        cb(null, "./public/videos"); // Save chunks to temp folder
+        cb(null, "./public/videos"); 
     },
     filename: (req, file, cb) => {
         const chunkIndex = 1;
@@ -46,82 +46,6 @@ const tempStorage = multer.diskStorage({
         cb(null, `${fileId}_${chunkIndex}`); // Name chunks with fileId and chunkIndex
     },
 });
-
-// const fileFilter = (req, file, cb) => {
-//     const allowedTypes = [
-//         'video/mp4', 'video/mkv', 'video/avi',
-//         'image/jpeg', 'image/png', 'image/gif', 'image/webp'
-//     ];
-//     if (allowedTypes.includes(file.mimetype)) {
-//         cb(null, true);
-//     } else {
-//         cb(new Error('Invalid file type. Only videos and images are allowed!'), false);
-//     }
-// };
-
-// const upload = multer({
-//     storage: tempStorage,
-//     limits: { fileSize: 500 * 1024 * 1024 }, // 50 MB file size limit
-//     fileFilter: fileFilter
-// })
-// .fields([
-//     { name: 'video', maxCount: 1 }, // Accept 1 video file
-//     { name: 'thumbnail', maxCount: 1 } // Accept 1 image file
-// ]);
-
-
-// router.post('/upload-chunk', upload.single('video'), async (req, res) => {
-//     try {
-//         const totalChunks = 10;
-//         const fileId = 1;
-//         // const { 'x-file-id': fileId, 'x-total-chunks': totalChunks } = req.headers;
-
-//         // Check if all chunks are uploaded
-//         const chunkFiles = Array.from({ length: parseInt(totalChunks) }).map((_, idx) =>
-//             path.join("./public/videos", `${fileId}_${idx}`)
-//         );
-
-//         const allChunksUploaded = chunkFiles.every((chunk) => fs.existsSync(chunk));
-
-//         if (allChunksUploaded) {
-//             // Combine all chunks into a single file
-//             const finalFilePath = path.join("./public/videos", `${fileId}_final`);
-//             const writeStream = fs.createWriteStream(finalFilePath);
-
-//             for (const chunk of chunkFiles) {
-//                 const data = fs.readFileSync(chunk);
-//                 writeStream.write(data);
-//                 fs.unlinkSync(chunk); // Delete chunk after appending
-//             }
-
-//             writeStream.end();
-
-//             // Upload to S3
-//             const fileStream = fs.createReadStream(finalFilePath);
-//             const s3Response = await s3.send(new PutObjectCommand({
-//                 Bucket: process.env.S3_BUCKET_NAME,
-//                 Key: `${fileId}`,
-//                 Body: fileStream,
-//                 ContentType: 'video/mp4', // Adjust as needed
-//             }));
-
-//             fs.unlinkSync(finalFilePath); // Cleanup final file
-
-//             res.status(200).send({
-//                 message: 'File uploaded successfully',
-//                 s3Response,
-//             });
-//         } else {
-//             res.status(200).send({
-//                 message: `Chunk uploaded successfully`,
-//             });
-//         }
-//     } catch (error) {
-//         res.status(500).send({
-//             error: error.message,
-//         });
-//     }
-// });
 
 
 const fileFilter = (req, file, cb) => {
