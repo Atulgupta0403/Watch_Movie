@@ -9,11 +9,11 @@ const status = require("express-status-monitor")
 
 app.use(session({
   secret: process.env.SECRET,
-  resave: false,             
-  saveUninitialized: true,   
-  cookie: {                  
-    secure: false,           
-    maxAge: 60000            
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    secure: false,
+    maxAge: 60000
   }
 }));
 
@@ -26,29 +26,29 @@ app.use(status())
 
 
 app.get("/", (req, res) => {
-    res.send("slash page")
+  res.send("slash page")
 })
 
 
 const signup = require("./Routes/signup")
 const login = require("./Routes/login")
 const forget = require("./Routes/forgetPass")
-const addMovie = require("./Routes/addMovie")
 const uploadVideo = require("./Routes/uploadVideo")
 const genre = require("./Routes/genre")
 const video = require("./Routes/videos")
+const logout = require("./Routes/logout")
 
 app.use("/signup", signup)
 app.use("/login", login)
 app.use("/", forget)
-app.use("/movie" , addMovie)
-app.use("/" , uploadVideo)
-app.use("/genre" , genre)
-app.use("/",video)
+app.use("/", uploadVideo)
+app.use("/genre", genre)
+app.use("/", video)
+app.use("/logout", logout)
 
 
 
 PORT = process.env.PORT;
 app.listen(PORT || 3000, () => {
-    console.log(`app is listening on port ${PORT}`)
+  console.log(`app is listening on port ${PORT}`)
 })

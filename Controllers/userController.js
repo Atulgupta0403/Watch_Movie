@@ -3,8 +3,8 @@ const bcrypt = require("bcrypt")
 const jwt = require("jsonwebtoken");
 
 const signup = async (req, res) => {
-    const { username, email, password , accountType} = req.body
-    const earlyUser = await userModels.findOne({$or : [{username} , {email}]})
+    const { username, email, password, accountType } = req.body
+    const earlyUser = await userModels.findOne({ $or: [{ username }, { email }] })
     console.log("earlyUser + " + earlyUser)
 
     if (!username || !email || !password) {
@@ -33,7 +33,7 @@ const signup = async (req, res) => {
 }
 
 const login = async (req, res) => {
-    const { email , password } = req.body;
+    const { email, password } = req.body;
 
     const user = await userModels.findOne({ email });
     if (user) {
@@ -43,7 +43,7 @@ const login = async (req, res) => {
                 console.log(token)
                 res.json(token)
             }
-            else{
+            else {
                 res.json("Incorrect Password");
             }
         })
@@ -53,4 +53,12 @@ const login = async (req, res) => {
     }
 }
 
-module.exports = { signup, login }
+
+const logout = async (req, res) => {
+    if (req.user) {
+        const user = await userModels.findOneAndDelete({ email: req.user.email })
+        res.json("Account deleted")
+    }
+}
+
+module.exports = { signup, login, logout }
