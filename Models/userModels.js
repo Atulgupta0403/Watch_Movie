@@ -36,6 +36,12 @@ const userSchema = new mongoose.Schema({
     resetTokenExpires : {
         type : Date  
     },
+    like : [{
+        type : String
+    }],
+    userLike : [{
+        type : String
+    }]
 })
 
 

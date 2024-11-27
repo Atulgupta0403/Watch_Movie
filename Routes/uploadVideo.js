@@ -73,17 +73,20 @@ const upload = multer({
 router.post("/upload", isAdmin, upload, async (req, res) => {
     try {
         // console.log(req.files)
-        const {movieName , cast} = req.body;
+        const { title , overview , genres , keywords , cast , crew} = req.body;
         if (!req.files || req.files?.video === undefined || req.files?.thumbnail === undefined) {
             res.json({ "message": "All fields are required" });
         }
         else {
             const movie = await movieModel.create({
-                thumbnail: req.files.thumbnail[0].location,
-                link: req.files.video[0].location,
-                movieName,
+                poster_url: req.files.thumbnail[0].location,
+                trailer_url : req.files.video[0].location,
+                title,
+                overview,
+                genres,
+                keywords,
                 cast,
-                type : req.files.video[0].mimetype
+                crew,
             })
             // console.log(movie)
             res.json({

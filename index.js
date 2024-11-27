@@ -37,6 +37,8 @@ const uploadVideo = require("./Routes/uploadVideo")
 const genre = require("./Routes/genre")
 const video = require("./Routes/videos")
 const Delete = require("./Routes/delete")
+const like = require("./Routes/likeVideo")
+const review = require("./Routes/likeVideo")
 
 app.use("/signup", signup)
 app.use("/login", login)
@@ -45,6 +47,7 @@ app.use("/", uploadVideo)
 app.use("/genre", genre)
 app.use("/", video)
 app.use("/delete", Delete)
+app.use("/",like)
 
 
 
