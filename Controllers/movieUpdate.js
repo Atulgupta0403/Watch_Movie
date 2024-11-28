@@ -37,5 +37,16 @@ const review = async (req,res) => {
     }
 }
 
+const rating = async (req,res) => {
+    if(req.user){
+        const id = req.headers['id'];
+        const { rate } = req.body;
+        const movie = await movieModel.findOne({ _id : id});
+        movie.rating = rate;
+        await movie.save();
+        res.json(movie.rating)
+        
+    }
+}
 
-module.exports = { likeVideo , review };
+module.exports = { likeVideo , review , rating};

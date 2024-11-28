@@ -40,6 +40,7 @@ const video = require("./Routes/videos")
 const Delete = require("./Routes/delete")
 const like = require("./Routes/likeVideo")
 const review = require("./Routes/likeVideo")
+// const uploadChunk = require("./Controllers/multer")
 
 app.use("/signup", signup)
 app.use("/login", login)
@@ -49,6 +50,7 @@ app.use("/genre", genre)
 app.use("/", video)
 app.use("/delete", Delete)
 app.use("/",like)
+// app.use("/",uploadChunk)
 
 
 

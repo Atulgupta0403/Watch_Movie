@@ -39,6 +39,10 @@ const movieSchema = new mongoose.Schema({
     like : {
         type : Number,
         default : 0,
+    },
+    rating : {
+        type : Number,
+        default : 0
     }
 
 })

@@ -100,7 +100,6 @@ router.post("/upload", isAdmin, upload, async (req, res) => {
             error: error.message
         });
     }
-
 })
 
 router.get("/description", isLoggedIn, async (req, res) => {
