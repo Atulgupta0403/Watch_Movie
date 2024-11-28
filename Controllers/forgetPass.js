@@ -29,14 +29,14 @@ const forgetPasswordHandler = async (req,res) => {
 
         console.log("from " + user);
 
-        const resetUrl = `http://localhost:3000/password/reset/${resetToken}`;
+        const resetUrl = `https://watch-movie-tzae.onrender.com/password/reset/${resetToken}`;
 
         const mailOptions = {
             from: "atulgupta0403@gmail.com",
             to: email,
             subject: 'Password Reset Request',
             text: `You requested a password reset. Click the link to reset your password: ${resetUrl}`,
-            html: `<p>You requested a password reset. http://localhost:3000/password/reset/${resetToken}`
+            html: `<p>You requested a password reset. https://watch-movie-tzae.onrender.com/password/reset/${resetToken}`
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

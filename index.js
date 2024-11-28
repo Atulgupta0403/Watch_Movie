@@ -23,6 +23,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(passport.initialize());
 app.use(passport.session());
 app.use(status())
+app.set("view engine" , "ejs")
 
 
 app.get("/", (req, res) => {
