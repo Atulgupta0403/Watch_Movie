@@ -5,11 +5,21 @@ const jwt = require("jsonwebtoken");
 const signup = async (req, res) => {
     const { username, email, password, accountType } = req.body
     const earlyUser = await userModels.findOne({ $or: [{ username }, { email }] })
-    console.log("earlyUser + " + earlyUser)
 
-    if (!username || !email || !password) {
-        return res.json("All fields are required")
-    }
+    // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    // const passwordRegex = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+    // if (!username || !email || !password) {
+    //     return res.json("All fields are required")
+    // }
+
+    // if(emailRegex.test(email)){
+    //     return res.json("invalid email")
+    // }
+    // if(passwordRegex.test(password)){
+    //     return res.json("invalid password")
+    // }
+
     if (password.length < 6) {
         return res.json("password must of length 6 letter")
     }

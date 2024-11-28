@@ -103,12 +103,11 @@ router.post("/upload", isAdmin, upload, async (req, res) => {
 
 })
 
-router.get("/videos", isLoggedIn, async (req, res) => {
+router.get("/description", isLoggedIn, async (req, res) => {
     if (req.user) {
-        const movies = await movieModel.find();
+        const movies = await movieModel.find().select("-trailer_url");
         res.json(movies)
     }
-
 })
 
 
