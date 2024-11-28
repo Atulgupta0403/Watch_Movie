@@ -41,6 +41,10 @@ const userSchema = new mongoose.Schema({
     }],
     userLike : [{
         type : String
+    }],
+    watchList : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : "Movie"
     }]
 })
 
