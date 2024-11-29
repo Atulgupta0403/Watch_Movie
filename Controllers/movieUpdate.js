@@ -33,7 +33,7 @@ const likedVideo = async (req,res) => {
         // const movies = [];
         const movies = await Promise.all(
             moviesId.map(async (id) => {
-                const movie = await movieModel.findOne({ _id: id }).select("-poster_url");
+                const movie = await movieModel.findOne({ _id: id }).select("-trailer_url");
                 return movie;
             })
         );
