@@ -26,6 +26,21 @@ const likeVideo = async (req, res) => {
     }
 }
 
+const likedVideo = async (req,res) => {
+    if(req.user){
+        const user = await userModels.findOne({email : req.user.email})
+        const moviesId = user.userLike;
+        // const movies = [];
+        const movies = await Promise.all(
+            moviesId.map(async (id) => {
+                const movie = await movieModel.findOne({ _id: id }).select("-poster_url");
+                return movie;
+            })
+        );
+        res.json(movies)
+    }
+}
+
 const review = async (req,res) => {
     if(req.user){
         const {review} = req.body;
@@ -79,4 +94,4 @@ const getWatchList = async (req,res) => {
     }
 }
 
-module.exports = { likeVideo , review , rating , watchList , getWatchList};
+module.exports = { likeVideo , review , rating , watchList , getWatchList , likedVideo};

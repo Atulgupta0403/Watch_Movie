@@ -6,7 +6,6 @@ const passport = require("passport")
 const status = require("express-status-monitor")
 
 
-
 app.use(session({
   secret: process.env.SECRET,
   resave: false,
@@ -39,8 +38,8 @@ const genre = require("./Routes/genre")
 const video = require("./Routes/videos")
 const Delete = require("./Routes/delete")
 const like = require("./Routes/likeVideo")
-// const uploadChunk = require("./Controllers/multer")
 const watchList = require("./Routes/watchList")
+const uploadChunk = require("./Controllers/multer")
 
 app.use("/signup", signup)
 app.use("/login", login)
@@ -51,7 +50,7 @@ app.use("/", video)
 app.use("/delete", Delete)
 app.use("/",like)
 app.use("/",watchList)
-// app.use("/",uploadChunk)
+app.use("/",uploadChunk)
 
 
 

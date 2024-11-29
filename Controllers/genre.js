@@ -28,4 +28,14 @@ const choice = async (req, res) => {
 }
 
 
-module.exports = { genre, choice }
+const getgenre = async (req,res) => {
+    if(req.user){
+        const user = await userModels.findOne({ email : req.user.email });
+        const genres = user.genre;
+
+        res.send(genres)
+    }
+}
+
+
+module.exports = { genre, choice ,getgenre }
