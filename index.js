@@ -44,6 +44,7 @@ const Delete = require("./Routes/delete")
 const like = require("./Routes/likeVideo")
 const watchList = require("./Routes/watchList")
 const uploadChunk = require("./Controllers/multer")
+const changePass = require("./Routes/changePass")
 
 app.use("/signup", signup)
 app.use("/login", login)
@@ -55,6 +56,7 @@ app.use("/delete", Delete)
 app.use("/",like)
 app.use("/",watchList)
 app.use("/",uploadChunk)
+app.use("/changePass" , changePass)
 
 
 
