@@ -86,7 +86,7 @@ const getWatchList = async (req,res) => {
         const ids = user.watchList;
         const movies = await Promise.all(
             ids.map(async (id) => {
-                const movie = await movieModel.findOne({ _id: id });
+                const movie = await movieModel.findOne({ _id: id }).select("-trailer_url");
                 return movie;
             })
         );

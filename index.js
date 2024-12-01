@@ -29,6 +29,10 @@ app.get("/", (req, res) => {
   res.send("slash page")
 })
 
+app.get('/videos', (req, res) => {
+  res.sendFile(__dirname + '/index1.html');
+})
+
 
 const signup = require("./Routes/signup")
 const login = require("./Routes/login")
@@ -46,7 +50,7 @@ app.use("/login", login)
 app.use("/", forget)
 app.use("/", uploadVideo)
 app.use("/genre", genre)
-app.use("/", video)
+app.use("/video", video)
 app.use("/delete", Delete)
 app.use("/",like)
 app.use("/",watchList)
