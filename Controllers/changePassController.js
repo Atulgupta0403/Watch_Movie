@@ -8,7 +8,7 @@ const changePass =  async (req,res) => {
         const hashPassword = user.password;
         
         if(new_password.length < 6){
-            return res.json("Password must be greater than 6 digit")
+            res.json("Password must be greater than 6 digit")
         }
 
         bcrypt.compare(old_password ,hashPassword  ,(err,result) => {

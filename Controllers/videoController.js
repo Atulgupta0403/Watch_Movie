@@ -1,13 +1,11 @@
 const movieModel = require("../Models/movieModel")
 const fs = require("fs")
-const https = require("https")
 
 
 const video = async (req, res) => {
     // if (req.user) {
-        // const id = req.headers['id'];
-        // const movie = await movieModel.findOne({ _id: id })
-        console.log("/video called")
+        const id = req.headers['id'];
+        const movie = await movieModel.findOne({ _id: id })
         const range = req.headers.range
         if (!range){
             res.send({msg:"privide range"})
@@ -23,14 +21,9 @@ const video = async (req, res) => {
         const headers = {
             "Content-Range": `bytes ${start}-${end}/${videoSize}`,
             "Accept-Ranges": "bytes",
-            "Content-Length": contentLength,
+            "Conten't-Length": contentLength,
             "Content-Type": "video/mp4"
         }
-        
-        console.log("Accept-Ranges   " + headers["Accept-Ranges"])
-        console.log("Content-Length   " + headers["Content-Length"])
-        console.log("Content-Range   " + headers["Content-Range"])
-        console.log("Content-Type   " + headers["Content-Type"])
 
         res.writeHead(206, headers)
         const stream = fs.createReadStream(videoPath, {
